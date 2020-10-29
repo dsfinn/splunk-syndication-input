@@ -13,12 +13,10 @@ class FeedsTail(SearchCommand):
     """
     This class is the command that retrieves the feed information.
     """
-    def __init__(self, url, username=None, password=None, clean_html=False):
+    def __init__(self, url, clean_html=False):
 
         # Save the parameters
         self.url = url
-        self.username = username
-        self.password = password
         self.clean_html = normalizeBoolean(clean_html)
 
          # Initialize the class
@@ -26,7 +24,7 @@ class FeedsTail(SearchCommand):
 
     def handle_results(self, results, session_key, in_preview):
 
-        results = SyndicationModularInput.get_feed(self.url, self.username, self.password, clean_html=self.clean_html, logger=self.logger)
+        results = SyndicationModularInput.get_feed(feed_url=self.url, clean_html=self.clean_html, logger=self.logger)
         self.output_results(results)
 
 if __name__ == '__main__':

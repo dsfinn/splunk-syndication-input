@@ -41,8 +41,6 @@ class SyndicationModularInput(ModularInput):
         args = [
                 URLField("url", "Feed URL", "The URL of the feed to input", empty_allowed=False),
                 BooleanField("include_only_changed", "Include only new or changed entries", "Only include entries that has not been indexed yet (won't get items that were already observed)", empty_allowed=False),
-                Field("username", "Username", "The username to use for authenticating (only HTTP authentication supported)", none_allowed=True, empty_allowed=True, required_on_create=False, required_on_edit=False),
-                Field("password", "Password", "The password to use for authenticating (only HTTP authentication supported)", none_allowed=True, empty_allowed=True, required_on_create=False, required_on_edit=False),
                 DurationField("interval", "Interval", "The interval defining how often to import the feed; can include time units (e.g. 15m for 15 minutes, 8h for 8 hours)", empty_allowed=False),
                 BooleanField("clean_html", "Convert HTML to Text", "Convert HTML to human readable text", empty_allowed=False)
                 ]
@@ -64,14 +62,12 @@ class SyndicationModularInput(ModularInput):
         return None
 
     @classmethod
-    def get_realm_and_auth_type(cls, feed_url, username, password, logger=None):
+    def get_realm_and_auth_type(cls, feed_url, logger=None):
         """
         Get the realm and authentication type for the given feed.
 
         Arguments:
         feed_url -- The URL of the feed to retrieve (as a string)
-        username -- The username to use when authenticating
-        password -- The password to use when authenticating
         logger -- A logger to log failure to parse the header messages
         """
 
@@ -119,7 +115,7 @@ class SyndicationModularInput(ModularInput):
         password -- The password to use when authenticating
         """
 
-        realm, auth_type = cls.get_realm_and_auth_type(feed_url, username, password, logger)
+        realm, auth_type = cls.get_realm_and_auth_type(feed_url, logger)
 
         # Make the associated auth handler
         if auth_type == None:
@@ -317,8 +313,6 @@ class SyndicationModularInput(ModularInput):
         feed_url = cleaned_params["url"]
         include_only_changed = cleaned_params.get("include_only_changed", True)
         sourcetype = cleaned_params.get("sourcetype", "syndication")
-        username = cleaned_params.get("username", None)
-        password = cleaned_params.get("password", None)
         host = cleaned_params.get("host", None)
         index = cleaned_params.get("index", "default")
         clean_html = cleaned_params.get("clean_html", False)
@@ -347,7 +341,7 @@ class SyndicationModularInput(ModularInput):
             last_entry_date_retrieved = None
 
             try:
-                results, last_entry_date_retrieved = self.get_feed(feed_url.geturl(), return_latest_date=True, include_later_than=last_entry_date, logger=self.logger, username=username, password=password, clean_html=clean_html)
+                results, last_entry_date_retrieved = self.get_feed(feed_url.geturl(), return_latest_date=True, include_later_than=last_entry_date, logger=self.logger, clean_html=clean_html)
             except:
                 self.logger.exception("Unable to get the feed, url=%s", feed_url.geturl())
                 result = None

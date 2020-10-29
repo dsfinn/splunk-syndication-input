@@ -11,11 +11,5 @@ include_only_changed = <value>
 * If true, then items will not be obtained if the are older than the last entry seen before
 * This prevents re=indexing the same items repeatedly
 
-username = <value>
-* Defines the username to use for authenticating (only HTTP authentication supported)
-
-password = <value>
-* Defines the password to use for authenticating (only HTTP authentication supported)
-
 clean_html = <value>
 * Indicates if the HTML content in the output to human readable text
