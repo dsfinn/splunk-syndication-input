@@ -13,8 +13,6 @@ except:
     from urllib2 import HTTPBasicAuthHandler, HTTPDigestAuthHandler, build_opener
 from collections import OrderedDict
 
-path_to_mod_input_lib = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'modular_input.zip')
-sys.path.insert(0, path_to_mod_input_lib)
 from modular_input import ModularInput, URLField, DurationField, BooleanField, Field
 from syndication_app.event_writer import StashNewWriter
 
