@@ -695,6 +695,9 @@ class ModularInput(object):
             elif name == "interval" and self.use_single_instance == False:
                 pass
 
+            elif name == "python.version":
+                pass
+
             # Throw an exception if the argument could not be found
             else:
                 raise FieldValidationException("The parameter '%s' is not a valid argument" % (name))
