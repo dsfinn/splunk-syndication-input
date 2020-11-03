@@ -417,15 +417,13 @@ class URLField(Field):
     Represents a URL. The URL is converted to a Python object that was created via urlparse.
     """
 
-    require_https_on_cloud = False
-
     def __init__(self, name, title, description, none_allowed=False, empty_allowed=True,
-                 required_on_create=None, required_on_edit=None, require_https_on_cloud=False):
+                 required_on_create=None, required_on_edit=None, require_https=True):
 
         super(URLField, self).__init__(name, title, description, none_allowed,
                                        empty_allowed, required_on_create, required_on_edit)
 
-        self.require_https_on_cloud = require_https_on_cloud
+        self.require_https = require_https
 
     @classmethod
     def parse_url(cls, value, name):
@@ -449,7 +447,7 @@ class URLField(Field):
 
         parsed_value = URLField.parse_url(value.strip(), self.name)
 
-        if self.require_https_on_cloud and parsed_value.scheme == "http" and session_key is not None and ServerInfo.is_on_cloud(session_key):
+        if (parsed_value.scheme == 'http') and self.require_https:
             raise FieldValidationException("The value of '%s' for the '%s' parameter must use encryption (be HTTPS not HTTP)" % (str(value), self.name))
 
         return parsed_value

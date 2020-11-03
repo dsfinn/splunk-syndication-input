@@ -37,7 +37,7 @@ class SyndicationModularInput(ModularInput):
                        'use_single_instance': "true"}
 
         args = [
-                URLField("url", "Feed URL", "The URL of the feed to input", empty_allowed=False),
+                URLField("url", "Feed URL", "The URL of the feed to input", empty_allowed=False, require_https=True),
                 BooleanField("include_only_changed", "Include only new or changed entries", "Only include entries that has not been indexed yet (won't get items that were already observed)", empty_allowed=False),
                 DurationField("interval", "Interval", "The interval defining how often to import the feed; can include time units (e.g. 15m for 15 minutes, 8h for 8 hours)", empty_allowed=False),
                 BooleanField("clean_html", "Convert HTML to Text", "Convert HTML to human readable text", empty_allowed=False)
