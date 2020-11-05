@@ -1,4 +1,4 @@
-<project default="package" name="syndication">
+<project default="package" name="syndication-unauthenticated">
 		
 	<import file="basebuild.xml"/>
 		
