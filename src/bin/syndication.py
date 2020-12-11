@@ -372,7 +372,9 @@ class SyndicationModularInput(ModularInput):
                     self.logger.warn("Latest entry date changed even though no entries were loaded, last_entry_date=$s, last_entry_date_retrieved=%s", last_entry_date, last_entry_date_retrieved)
 
                 # Save the checkpoint so that we remember when we last
-                if last_entry_date_retrieved is not None and last_entry_date_retrieved > last_entry_date:
+                if last_entry_date_retrieved is None:
+                    pass
+                elif last_entry_date is None or last_entry_date_retrieved > last_entry_date:
                     last_entry_date = last_entry_date_retrieved
 
                 self.save_checkpoint(input_config.checkpoint_dir, stanza, self.get_non_deviated_last_run(last_ran, interval, stanza), last_entry_date)
