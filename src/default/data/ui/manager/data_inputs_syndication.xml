@@ -164,6 +164,7 @@
 	          <view name="edit"/>
 	          <view name="create"/>
 	          <elements>
+			    <!--
 	            <element name="index" type="select" label="Index">
 	              <view name="list"/>
 	              <view name="edit"/>
@@ -178,6 +179,11 @@
 	                </key>
 	              </key>
 	            </element>
+			    -->
+				<element name="index" type="textfield" label="Index">
+					<view name="edit"/>
+					<view name="create"/>
+				</element>
 	          </elements>
 	        </element>
 	      </elements>
